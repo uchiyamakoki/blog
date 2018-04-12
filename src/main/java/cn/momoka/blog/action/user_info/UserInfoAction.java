@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import cn.momoka.blog.exception.MomokaException;
 import cn.momoka.blog.service.user_info.UserInfoService;
 import cn.momoka.blog.view.Result;
 import cn.momoka.blog.view.UserInfo;
@@ -25,6 +26,7 @@ public class UserInfoAction {
 	
 	@RequestMapping("index.action")
 	public String index(){
+		//UserInfo userInfo=userInfoService.selectUser("admin", "1234");
 		return "admin/index";
 	}
 	
@@ -35,19 +37,21 @@ public class UserInfoAction {
 	
 	@RequestMapping("login.json")
 	@ResponseBody
-	public Result login2(ModelMap map,HttpServletRequest request){
+	public Result login2(ModelMap map,HttpServletRequest request) throws MomokaException{
 		//1.0获取参数
 		String loginName=request.getParameter("login_name"); //与form的name对应
 		String passWord=request.getParameter("pass_word"); 
 		//2.0校验参数
 		//2.1判断参数是否为空
 		if(StringUtils.isEmpty(loginName)||StringUtils.isEmpty(passWord)){
-			return Result.error("用户名或者密码不能为空");
+			//return Result.error("用户名或者密码不能为空");
+			throw new MomokaException("用户名或者密码不能为空");
 		}
 		//2.2判断用户名密码是否正确
 		UserInfo userInfo=userInfoService.selectUser(loginName, passWord);
 		if(userInfo==null){
-			return Result.error("用户名或者密码不正确");
+			//return Result.error("用户名或者密码不正确");
+			throw new MomokaException("用户名或者密码不存在");
 		}
 		//3.0设置session
 		request.getSession().setAttribute("userInfo", userInfo);

@@ -34,6 +34,9 @@
 		</mvc:interceptor>
 	</mvc:interceptors>
 	
+	<!-- 全局异常处理器，只要你实现了HandlerExceptionResolver接口，这个类就是一个全局异常处理器-->
+	<bean class="cn.momoka.blog.exception.MomokaExceptionResolver"></bean>
+	
 	
 
 	

@@ -3,6 +3,7 @@ package cn.momoka.blog.action.user_info;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -21,6 +22,8 @@ import cn.momoka.blog.view.UserInfo;
 @RequestMapping("admin")
 public class UserInfoAction {
 	
+	private Logger log=Logger.getLogger(this.getClass());
+	
 	@Autowired
 	private UserInfoService userInfoService;
 	
@@ -38,6 +41,11 @@ public class UserInfoAction {
 	@RequestMapping("login.json")
 	@ResponseBody
 	public Result login2(ModelMap map,HttpServletRequest request) throws MomokaException{
+		
+		log.debug("DEBUG登陆开始");
+		log.info("INFO登陆开始");
+		log.error("ERROR登陆开始");//一般也可写在try catch里面
+		
 		//1.0获取参数
 		String loginName=request.getParameter("login_name"); //与form的name对应
 		String passWord=request.getParameter("pass_word"); 

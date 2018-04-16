@@ -22,7 +22,7 @@ import cn.momoka.blog.view.UserInfo;
 @RequestMapping("admin")
 public class UserInfoAction {
 	
-	private Logger log=Logger.getLogger(this.getClass());
+	//private Logger log=Logger.getLogger(this.getClass());
 	
 	@Autowired
 	private UserInfoService userInfoService;
@@ -42,9 +42,9 @@ public class UserInfoAction {
 	@ResponseBody
 	public Result login2(ModelMap map,HttpServletRequest request) throws MomokaException{
 		
-		log.debug("DEBUG登陆开始");
-		log.info("INFO登陆开始");
-		log.error("ERROR登陆开始");//一般也可写在try catch里面
+		//log.debug("DEBUG登陆开始");
+		//log.info("INFO登陆开始");
+		//log.error("ERROR登陆开始");//一般也可写在try catch里面
 		
 		//1.0获取参数
 		String loginName=request.getParameter("login_name"); //与form的name对应

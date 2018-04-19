@@ -37,4 +37,15 @@ public class TypeInfoAction {
 		map.put("list", list);
 		return "admin/type_info/list";
 	}
+	
+	@RequestMapping("save.json")
+	@ResponseBody
+	public Result login2(
+			@RequestParam(value = "idArr") String[] idArr,
+			@RequestParam(value = "sortArr") String[] sortArr,
+			@RequestParam(value = "nameArr") String[] nameArr
+			) {
+		typeInfoService.save(idArr,sortArr,nameArr);
+		return Result.success();
+	}
 }

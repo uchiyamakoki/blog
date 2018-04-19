@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import cn.momoka.blog.dao.type_info.ITypeInfoDAO;
 import cn.momoka.blog.dao.user_info.IUserInfoDAO;
@@ -22,6 +23,25 @@ public class TypeInfoService {
 	public List<TypeInfo> list() {
 		// TODO Auto-generated method stub
 		return iTypeInfoDAO.list();
+	}
+
+	/*
+	 * 批量更新/插入文章分类
+	 */
+	public void save(String[] idArr, String[] sortArr, String[] nameArr) {
+		//遍历第一个数组
+		for(int i=0;i<idArr.length;i++){
+			//判断这条数据需要更新还是插入
+			if(StringUtils.isEmpty(idArr[i])){
+				//插入
+				iTypeInfoDAO.insert(sortArr[i],nameArr[i]);
+			}else {
+				//更新
+				iTypeInfoDAO.update(idArr[i],sortArr[i],nameArr[i]);
+			}
+			
+		}
+		
 	}
 	
 	

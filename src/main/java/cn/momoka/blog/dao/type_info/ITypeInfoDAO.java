@@ -14,4 +14,18 @@ public interface ITypeInfoDAO {
 	 */
 	List<TypeInfo> list();
 
+	/*
+	 * 插入一条新的数据
+	 * 排序用
+	 * 分类的名称
+	 */
+	void insert(@Param("sort") String sort,@Param("name") String name);
+	/*
+	 * 更新一条新的数据
+	 * 主键
+	 * 排序用
+	 * 分类的名称
+	 */
+	void update(@Param("id") String id, @Param("sort") String sort,@Param("name") String name);
+
 }

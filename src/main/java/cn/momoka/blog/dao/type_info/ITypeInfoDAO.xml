@@ -20,4 +20,28 @@
 		ORDER BY
 			sort
 	</select>
+
+	<!-- 插入一条新的数据 -->
+	<insert id="insert">
+		INSERT INTO type_info
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="sort!=null and sort!=''">sort,</if>
+			<if test="name!=null and name!=''">name,</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="sort!=null and sort!=''">#{sort},</if>
+			<if test="name!=null and name!=''">#{name},</if>
+		</trim>
+	</insert>
+	
+	<!-- 更新一条数据 -->
+	<update id="update">
+		UPDATE type_info
+		<set>
+			<if test="sort!=null">sort=#{sort},</if>
+			<if test="name!=null">name=#{name},</if>
+		</set>
+		WHERE id = #{id}
+	</update>
+	
 </mapper>

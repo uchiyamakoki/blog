@@ -59,12 +59,8 @@
 							<!--表格上方的操作元素，添加、删除等-->
 							<div class="operation-wrap">
 								<div class="buttons-wrap">
-									<button class="button blue">
-										<span class="icon-plus"></span> 添加
-									</button>
-									<button class="button red">
-										<span class="icon-minus"></span> 删除
-									</button>
+									<button id="add" class="button blue"><span class="icon-plus"></span>添加</button>
+									<button id="save" class="button green"><span class="icon-check"></span>保存</button>
 								</div>
 							</div>
 							<table id="table" class="table">
@@ -79,9 +75,9 @@
 									<c:forEach items="${list}" var="entity"
 										varStatus="status">
 										<tr>
-											<td><input type="checkbox" class="fill listen-1-2" value="${entity.id}"/> </td>
-											<td><input type="text" class="text" name="sort" data-type="正整数" error-msg="必须输入正整数" value="${entity.sort}"/></td>
-											<td>${entity.name}</td>
+											<td style="width: 20px;"><input type="checkbox" class="fill listen-1-2" value="${entity.id}" name="id"/> </td>
+											<td style="width: 30%;"><input type="text" class="text" name="sort" data-type="正整数" error-msg="必须输入正整数" value="${entity.sort}"/></td>
+											<td><input type="text" class="text" name="name" data-type="必填"  placeholder="请输入分类名称" value="${entity.name }"/></td>
 										</tr>
 									</c:forEach>
 								</tbody>
@@ -93,4 +89,77 @@
 		</div>
 	</div>
 </body>
+<script>
+	var idArr=new Array();
+	var sortArr=new Array();
+	var nameArr=new Array();
+	//动态添加tr行
+	$("#add").click(function(){
+		var html="";
+		html+='<tr>';
+		html+='<td><input type="checkbox" class="fill listen-1-2" value="${entity.id}" name="id"/> </td>';
+		html+='<td><input type="text" class="text" name="sort" data-type="正整数" error-msg="必须输入正整数" value="${entity.sort}"/></td>';
+		html+='<td><input type="text" class="text" name="name" data-type="必填"  placeholder="请输入分类名称" value=""/></td>';
+		html+='</tr>';
+		//先拼接字符串，再把字符串加入到Table的tbody下
+		$("#table tbody").append(html);
+		//重新渲染
+		javaex.render();
+	});
+	//保存按钮点击事件
+	$("#save").click(function(){
+		if(javaexVerify()){
+			idArr=[];
+			sortArr=[];
+			nameArr=[];
+			//id
+			$(':checkbox[name="id"]').each(function(){
+				idArr.push($(this).val());
+			});
+			//sort
+			$('input[name="sort"]').each(function(){
+				sortArr.push($(this).val());
+			});
+			//id
+			$('input[name="name"]').each(function(){
+				nameArr.push($(this).val());
+			});
+			//console.log(idArr); 
+			//traditional : "true", 开启数组提交的支持
+			$.ajax({
+				url : "save.json",
+				type : "POST",
+				dataType : "json",
+				traditional : "true",
+				data : {
+					"idArr" : idArr,
+					"sortArr" : sortArr,
+					"nameArr" : nameArr
+				},
+				success : function(rtn) {
+					console.log(rtn);
+					if(rtn.code=="000000"){
+						javaex.optTip({
+							content : rtn.message
+						});
+						// 建议延迟加载
+						setTimeout(function() {
+							// 载入数据
+							//$("#content").append(resultHtml);
+							// 每次数据载入后，必须重置（需要传入数据区域的id）
+							//javaex.resetLoad("content");
+							window.location.reload();
+						}, 2000);
+						//window.location.reload();
+					}else{
+						javaex.optTip({
+							content : rtn.message,
+							type: "error"
+						});
+					}
+				}
+			});
+		}
+	});
+</script>
 </html>

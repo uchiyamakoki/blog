@@ -48,4 +48,13 @@ public class TypeInfoAction {
 		typeInfoService.save(idArr,sortArr,nameArr);
 		return Result.success();
 	}
+	
+	@RequestMapping("delete.json")
+	@ResponseBody
+	public Result login3(
+			@RequestParam(value = "idArr") String[] idArr
+			) {
+		typeInfoService.delete(idArr);
+		return Result.success();
+	}
 }

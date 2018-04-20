@@ -44,4 +44,13 @@
 		WHERE id = #{id}
 	</update>
 	
+	<!-- 批量删除 -->
+	<delete id="delete">
+	DELETE FROM type_info WHERE id IN
+	<foreach collection="idArr" index="index" item="item" open="(" separator="," close=")">
+		#{item}
+	</foreach>
+	</delete>
+	
+	
 </mapper>

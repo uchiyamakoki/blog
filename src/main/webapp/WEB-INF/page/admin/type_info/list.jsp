@@ -61,6 +61,8 @@
 								<div class="buttons-wrap">
 									<button id="add" class="button blue"><span class="icon-plus"></span>添加</button>
 									<button id="save" class="button green"><span class="icon-check"></span>保存</button>
+									<button id="delete" class="button red"><span class="icon-minus"></span> 删除</button>
+									
 								</div>
 							</div>
 							<table id="table" class="table">
@@ -160,6 +162,56 @@
 				}
 			});
 		}
+	});
+	//点击删除按钮事件
+	$("#delete").click(function(){
+		idArr=[];
+		//1.0遍历所有被勾选的复选框
+		$(':checkbox[name="id"]:checked').each(function(){
+			//console.log($(this).val());
+			//2.0添加主键存在的记录
+			var id=$(this).val();
+			if(id!=""){				
+				idArr.push(id);
+			}
+			//判断勾选的是不是新增的空白记录
+			if(idArr.length==0){
+				//前台无刷新去除新增的tr
+				$(this).parent().parent().parent().remove();
+			}else{
+				$.ajax({
+					url : "delete.json",
+					type : "POST",
+					dataType : "json",
+					traditional : "true",
+					data : {
+						"idArr" : idArr
+					},
+					success : function(rtn) {
+						console.log(rtn);
+						if(rtn.code=="000000"){
+							javaex.optTip({
+								content : rtn.message
+							});
+							// 建议延迟加载
+							setTimeout(function() {
+								// 载入数据
+								//$("#content").append(resultHtml);
+								// 每次数据载入后，必须重置（需要传入数据区域的id）
+								//javaex.resetLoad("content");
+								window.location.reload();
+							}, 2000);
+							//window.location.reload();
+						}else{
+							javaex.optTip({
+								content : rtn.message,
+								type: "error"
+							});
+						}
+					}
+				});
+			}
+		});
 	});
 </script>
 </html>

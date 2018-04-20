@@ -43,6 +43,14 @@ public class TypeInfoService {
 		}
 		
 	}
+	/*
+	 * 删除文章分类
+	 * iddar: 主键数组
+	 */
+	public void delete(String[] idArr) {
+		// TODO Auto-generated method stub
+		iTypeInfoDAO.delete(idArr);
+	}
 	
 	
 	

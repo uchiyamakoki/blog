@@ -28,4 +28,10 @@ public interface ITypeInfoDAO {
 	 */
 	void update(@Param("id") String id, @Param("sort") String sort,@Param("name") String name);
 
+	/*
+	 * 批量删除文章分类
+	 * idArr 主键数组
+	 */
+	int delete(@Param("idArr") String[] idArr);
+
 }

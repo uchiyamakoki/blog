@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+ "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="cn.momoka.blog.dao.article_info.IArticleInfoDAO">
+	
+	<!-- 建立sql查询结果字段与实体属性的映射关系 -->
+	<resultMap id="ArticleInfoMap" type="cn.momoka.blog.view.ArticleInfo">
+		<result column="id" property="id" />
+		<result column="title" property="title" />
+		<result column="content" property="content" />
+		<result column="content_text" property="content_text" />
+		<result column="cover" property="cover" />
+		<result column="view_count" property="view_count" />
+		<result column="update_time" property="update_time" />
+		<result column="status" property="status" />
+	</resultMap>
+	
+	<!-- 查询所有文章分类 -->
+	<select id="listNormal" resultMap="ArticleInfoMap">
+		SELECT
+			*
+		FROM
+			article_info
+		WHERE
+			status = '1'
+		ORDER BY
+			update_time DESC
+	</select>
+
+	
+	
+	
+</mapper>

@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>无标题文档</title>
+<title>文章分类</title>
 </head>
 
 <body>
@@ -68,8 +68,8 @@
 							<table id="table" class="table">
 								<thead>
 									<tr>
-										<th><input type="checkbox" class="fill listen-1"/> </th>
-										<th>显示排序</th>
+										<th style="width: 20px;"><input type="checkbox" class="fill listen-1"/> </th>
+										<th style="width: 30%;">显示排序</th>
 										<th>名称</th>
 									</tr>
 								</thead>
@@ -77,8 +77,8 @@
 									<c:forEach items="${list}" var="entity"
 										varStatus="status">
 										<tr>
-											<td style="width: 20px;"><input type="checkbox" class="fill listen-1-2" value="${entity.id}" name="id"/> </td>
-											<td style="width: 30%;"><input type="text" class="text" name="sort" data-type="正整数" error-msg="必须输入正整数" value="${entity.sort}"/></td>
+											<td ><input type="checkbox" class="fill listen-1-2" value="${entity.id}" name="id"/> </td>
+											<td ><input type="text" class="text" name="sort" data-type="正整数" error-msg="必须输入正整数" value="${entity.sort}"/></td>
 											<td><input type="text" class="text" name="name" data-type="必填"  placeholder="请输入分类名称" value="${entity.name }"/></td>
 										</tr>
 									</c:forEach>

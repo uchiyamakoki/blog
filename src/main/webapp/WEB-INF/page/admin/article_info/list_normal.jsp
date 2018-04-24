@@ -59,9 +59,10 @@
 							<!--表格上方的操作元素，添加、删除等-->
 							<div class="operation-wrap">
 								<div class="buttons-wrap">
+									<a href="edit.action">
 									<button id="add" class="button blue"><span class="icon-plus"></span>添加</button>
-									<button id="save" class="button green"><span class="icon-check"></span>保存</button>
-									<button id="delete" class="button red"><span class="icon-minus"></span> 删除</button>
+									</a>
+									
 									
 								</div>
 							</div>
@@ -74,13 +75,14 @@
 										<th>文章标题</th>
 										<th>撰写日期</th>
 										<th>阅读量</th>
+										<th>编辑</th>
 									</tr>
 								</thead>
 								<tbody>
 									<c:choose>
 										<c:when test="${fn:length(list)==0}">
 											<tr>
-												<td colspan="6" style="text-align: center;">暂无记录</td>
+												<td colspan="7" style="text-align: center;">暂无记录</td>
 											</tr>
 										</c:when>
 										<c:otherwise>

@@ -26,5 +26,12 @@ public class ArticleInfoService {
 		// TODO Auto-generated method stub
 		return iArticleInfoDAO.listNormal();
 	}
+	/*
+	 * 查询单个文章的信息
+	 */
+	public ArticleInfo selectById(String id) {
+		// TODO Auto-generated method stub
+		return iArticleInfoDAO.selectById(id);
+	}
 
 }

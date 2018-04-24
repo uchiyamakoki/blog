@@ -15,6 +15,11 @@ public interface IArticleInfoDAO {
 	 */
 	List<ArticleInfo> listNormal();
 
+	/*
+	 * 根据主键查询文章信息
+	 */
+	ArticleInfo selectById(String id);
+
 	
 
 }

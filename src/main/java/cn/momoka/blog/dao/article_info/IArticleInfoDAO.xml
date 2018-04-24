@@ -7,6 +7,7 @@
 	<!-- 建立sql查询结果字段与实体属性的映射关系 -->
 	<resultMap id="ArticleInfoMap" type="cn.momoka.blog.view.ArticleInfo">
 		<result column="id" property="id" />
+		<result column="type_id" property="typeId" />
 		<result column="title" property="title" />
 		<result column="content" property="content" />
 		<result column="content_text" property="content_text" />
@@ -28,6 +29,15 @@
 			update_time DESC
 	</select>
 
+	<!-- 查询单个文章的信息 -->
+	<select id="selectById" resultMap="ArticleInfoMap">
+		SELECT
+			*
+		FROM
+			article_info
+		WHERE
+			id=${id}
+	</select>
 	
 	
 	

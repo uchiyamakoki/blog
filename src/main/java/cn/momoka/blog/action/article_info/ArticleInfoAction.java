@@ -31,13 +31,37 @@ public class ArticleInfoAction {
 	
 	@Autowired
 	private ArticleInfoService articleInfoService;
-	
+	@Autowired
+	private TypeInfoService typeInfoService;
+	/*
+	 * 查询所有文章分类
+	 */
 	@RequestMapping("list_normal.action")
 	public String listNormal(ModelMap map){
 		//UserInfo userInfo=userInfoService.selectUser("admin", "1234");
 		List<ArticleInfo> list=articleInfoService.listNormal();
 		map.put("list", list);
 		return "admin/article_info/list_normal";
+	}
+	
+	/*
+	 * 文章编辑
+	 */
+	@RequestMapping("edit.action")
+	public String edit(ModelMap map,
+			@RequestParam(required = false, value = "id") String id){
+		//单个文章的信息
+		//1.0判断新增还是更新文章
+		//查询单个文章的信息
+		if(!StringUtils.isEmpty(id)){
+			ArticleInfo articleInfo=articleInfoService.selectById(id);
+			map.put("articleInfo", articleInfo);
+		}else {
+			
+		}
+		//查询所有文章分类
+		map.put("typeList", typeInfoService.list());
+		return "admin/article_info/edit";
 	}
 	
 }

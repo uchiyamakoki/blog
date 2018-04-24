@@ -8,6 +8,7 @@ import java.util.Date;
 public class ArticleInfo {
 	
 	private String id;
+	private String typeId;
 	private String title;
 	private String content;
 	private String content_text;//文章的中文简介
@@ -20,6 +21,12 @@ public class ArticleInfo {
 	}
 	public void setId(String id) {
 		this.id = id;
+	}
+	public String getTypeId() {
+		return typeId;
+	}
+	public void setTypeId(String typeId) {
+		this.typeId = typeId;
 	}
 	public String getTitle() {
 		return title;
@@ -64,9 +71,4 @@ public class ArticleInfo {
 		this.status = status;
 	}
 	
-	
-	
-	
-	
-
 }

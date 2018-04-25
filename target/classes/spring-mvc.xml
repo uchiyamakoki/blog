@@ -38,6 +38,15 @@
 	<bean class="cn.momoka.blog.exception.MomokaExceptionResolver"></bean>
 	
 	
+	<!-- 文件上传 -->
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<!-- 设置默认编码 -->
+		<property name="defaultEncoding" value="utf-8"></property>
+		<!-- 上传文件总的大小最大为5M-->
+		<property name="maxUploadSize" value="5242440"></property>
+	</bean>
+	
+	
 
 	
 </beans>

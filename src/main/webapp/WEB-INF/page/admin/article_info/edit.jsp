@@ -82,13 +82,13 @@
 									</div>
 									<div class="right">
 										<!-- 图片承载容器 -->
-										<label id="container2" for="upload2"
+										<label id="container" for="upload"
 											style="display: inline-block; width: 132px; height: 74px;">
 											<img src="${pageContext.request.contextPath}/static/javaex/pc/images/default.png" width="100%"
 											height="100%" />
 										</label>
 										<!-- 上传按钮 -->
-										<input type="file" class="hide" id="upload2"
+										<input type="file" class="hide" id="upload"
 											accept="image/gif, image/jpeg, image/jpg, image/png" />
 									</div>
 									<!--清浮动-->
@@ -133,21 +133,21 @@
 
 	javaex.upload({
 		type : "image",
-		url : "${pageContext.request.contextPath}/upload/upload.json", // 请求路径
-		id : "upload2", // <input type="file" />的id
+		url : "upload.json", // 请求路径
+		id : "upload", // <input type="file" />的id
 		param : "file", // 参数名称，SSM中与MultipartFile的参数名保持一致
 		dataType : "url", // 返回的数据类型：base64 或 url
 		callback : function(rtn) {
 			// 后台返回的数据
 			console.log(rtn);
-			//		if (rtn.code=="000000") {
-			//			$("#container img").attr("src", "/pic/"+rtn.data.imgUrl);
-			//		} else {
-			//			javaex.optTip({
-			//				content : rtn.message,
-			//				type : "error"
-			//			});
-			//		}
+					if (rtn.code=="000000") {
+						$("#container img").attr("src", "/upload/"+rtn.data.imgUrl);
+					} else {
+						javaex.optTip({
+							content : rtn.message,
+							type : "error"
+						});
+					}
 		}
 	});
 
@@ -160,14 +160,14 @@
 	javaex.edit({
 		id : "edit",
 		image : {
-			url : "${pageContext.request.contextPath}/upload/upload.json", // 请求路径
-			param : "file", // 参数名称，SSM中与MultipartFile的参数名保持一致
-			dataType : "url", // 返回的数据类型：base64 或 url
-			rtn : "rtnData", // 后台返回的数据对象，在前面页面用该名字存储
-			imgUrl : "data.imgUrl", // 根据返回的数据对象，获取图片地址。  例如后台返回的数据为：{code: "000000", message: "操作成功！", data: {imgUrl: "1.jpg"}}
-			prefix : "/upload/" // 图片地址的前缀，根据实际情况决定是否需要填写
+			url : "upload.json",	// 请求路径
+			param : "file",		// 参数名称，SSM中与MultipartFile的参数名保持一致
+			dataType : "url",	// 返回的数据类型：base64 或 url
+			rtn : "rtnData",	// 后台返回的数据对象，在前面页面用该名字存储
+			imgUrl : "data.imgUrl",	// 根据返回的数据对象，获取图片地址。  例如后台返回的数据为：{code: "000000", message: "操作成功！", data: {imgUrl: "1.jpg"}}
+			prefix : "/upload/"	// 图片地址的前缀，根据实际情况决定是否需要填写
 		},
-		content : '', // 这里必须是单引号，因为html代码中都是双引号，会产生冲突
+		content : '',	// 这里必须是单引号，因为html代码中都是双引号，会产生冲突
 		callback : function(rtn) {
 			$("#articleContent").val(rtn.html);
 			$("#articleContentText").val(rtn.text);

@@ -1,5 +1,7 @@
 package cn.momoka.blog.service.article_info;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +34,25 @@ public class ArticleInfoService {
 	public ArticleInfo selectById(String id) {
 		// TODO Auto-generated method stub
 		return iArticleInfoDAO.selectById(id);
+	}
+	/*
+	 * 保存文章
+	 */
+	public void save(ArticleInfo articleInfo) {
+		Date currentTime=new Date();
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		String now=formatter.format(currentTime);
+		// 修改还是新增
+		if(StringUtils.isEmpty(articleInfo.getId())){
+			articleInfo.setStatus(1);
+			articleInfo.setUpdate_time(now);
+			articleInfo.setView_count(1);
+			iArticleInfoDAO.insert(articleInfo);
+		}else {
+			//更新
+			articleInfo.setUpdate_time(now);
+			iArticleInfoDAO.update(articleInfo);
+		}
 	}
 
 }

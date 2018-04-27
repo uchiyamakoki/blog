@@ -51,7 +51,7 @@ public class ArticleInfoAction {
 	@Autowired
 	private TypeInfoService typeInfoService;
 	/*
-	 * 查询所有文章分类
+	 * 查询所有文章(正常)
 	 */
 	@RequestMapping("list_normal.action")
 	public String listNormal(ModelMap map){
@@ -79,6 +79,15 @@ public class ArticleInfoAction {
 		//查询所有文章分类
 		map.put("typeList", typeInfoService.list());
 		return "admin/article_info/edit";
+	}
+	/*
+	 * 文章保存
+	 */
+	@RequestMapping("save.json")
+	@ResponseBody
+	public Result save(ArticleInfo articleInfo) {
+		articleInfoService.save(articleInfo);
+		return Result.success();
 	}
 	
 	/**

@@ -42,14 +42,15 @@
 						<div class="main">
 							<!--表单-->
 							<form id="form">
+							<input type="hidden" name="id" value="${articleInfo.id}" />
 								<!--输入框-->
 								<div class="unit">
 									<div class="left">
 										<p class="subtitle">标题</p>
 									</div>
 									<div class="right">
-										<input type="text" class="text" name="username"
-											data-type="必填" placeholder="请输入文章标题" />
+										<input type="text" class="text" name="title"
+											data-type="必填" placeholder="请输入文章标题" value="${articleInfo.title}"/>
 									</div>
 									<!--清浮动-->
 									<span class="clearfix"></span>
@@ -63,9 +64,9 @@
 										<p class="subtitle">所属分类</p>
 									</div>
 									<div class="right">
-										<select id="type_id">
-											<c:forEach items="${typeList}" var="typeInfo" varStatus="status">
-												<option value="${typeInfo.id}">${typeInfo.name}</option>
+										<select id="type_id" name="typeId">
+										<c:forEach items="${typeList}" var="typeInfo" varStatus="status" >
+												<option value="${typeInfo.id}" <c:if test="${articleInfo.typeId==typeInfo.id}">selected</c:if>>${typeInfo.name}</option>
 											</c:forEach>
 										</select>
 									</div>
@@ -82,14 +83,24 @@
 									</div>
 									<div class="right">
 										<!-- 图片承载容器 -->
-										<label id="container" for="upload"
-											style="display: inline-block; width: 132px; height: 74px;">
-											<img src="${pageContext.request.contextPath}/static/javaex/pc/images/default.png" width="100%"
-											height="100%" />
+										<label id="container" for="upload" style="display: inline-block; width: 132px; height: 74px;">
+											<c:choose>
+												<c:when test="${empty articleInfo.cover}">
+													<img
+														src="${pageContext.request.contextPath}/static/javaex/pc/images/default.png"
+														width="100%" height="100%" />
+												</c:when>
+												<c:otherwise>
+													<img
+														src="${articleInfo.cover}" width="100%" height="100%" />
+												</c:otherwise>
+											</c:choose>
+											 
 										</label>
 										<!-- 上传按钮 -->
 										<input type="file" class="hide" id="upload"
 											accept="image/gif, image/jpeg, image/jpg, image/png" />
+										<input type="hidden" id="cover" name="cover" value="" />
 									</div>
 									<!--清浮动-->
 									<span class="clearfix"></span>
@@ -104,6 +115,8 @@
 									</div>
 									<div class="right">
 										<div id="edit" class="edit-container"></div>
+										<input type="hidden" id="content" name="content" value="" />
+										<input type="hidden" id="content_text" name="content_text" value="" />
 									</div>
 									<!--清浮动-->
 									<span class="clearfix"></span>
@@ -141,7 +154,9 @@
 			// 后台返回的数据
 			console.log(rtn);
 					if (rtn.code=="000000") {
-						$("#container img").attr("src", "/upload/"+rtn.data.imgUrl);
+						var imgUrl=rtn.data.imgUrl;
+						$("#container img").attr("src", "/upload/"+imgUrl);
+						$("#cover").val("http://localhost:8080/upload/"+imgUrl);
 					} else {
 						javaex.optTip({
 							content : rtn.message,
@@ -157,6 +172,9 @@
 	// 选择后的回调函数
 
 	});
+	
+	var content='${articleInfo.content}';
+	
 	javaex.edit({
 		id : "edit",
 		image : {
@@ -167,11 +185,41 @@
 			imgUrl : "data.imgUrl",	// 根据返回的数据对象，获取图片地址。  例如后台返回的数据为：{code: "000000", message: "操作成功！", data: {imgUrl: "1.jpg"}}
 			prefix : "/upload/"	// 图片地址的前缀，根据实际情况决定是否需要填写
 		},
-		content : '',	// 这里必须是单引号，因为html代码中都是双引号，会产生冲突
+		content : content,	// 这里必须是单引号，因为html代码中都是双引号，会产生冲突
 		callback : function(rtn) {
-			$("#articleContent").val(rtn.html);
-			$("#articleContentText").val(rtn.text);
+			$("#content").val(rtn.html);
+			$("#content_text").val(rtn.text.substring(0,100));
 		}
+	});
+	$("#return").click(function(){
+		history.back();
+	});
+	$("#submit").click(function(){
+		$.ajax({
+			url : "save.json",
+			type : "POST",
+			dataType : "json",
+			data : $("#form").serialize(),
+			success : function(rtn) {
+				if(rtn.code=="000000"){
+					javaex.optTip({
+						content : rtn.message
+					});
+					// 建议延迟加载
+					setTimeout(function() {
+						//跳转页面
+						//window.location.reload();
+						window.location.href = "${pageContext.request.contextPath}/article_info/list_normal.action";
+					}, 2000);
+					//window.location.reload();
+				}else{
+					javaex.optTip({
+						content : rtn.message,
+						type: "error"
+					});
+				}
+			}
+		});
 	});
 </script>
 </html>

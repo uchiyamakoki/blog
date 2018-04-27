@@ -20,6 +20,16 @@ public interface IArticleInfoDAO {
 	 */
 	ArticleInfo selectById(String id);
 
+	/*
+	 * 新增文章
+	 */
+	void insert(ArticleInfo articleInfo);
+
+	/*
+	 * 更新文章
+	 */
+	void update(ArticleInfo articleInfo);
+
 	
 
 }

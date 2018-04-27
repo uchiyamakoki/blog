@@ -86,12 +86,21 @@
 											</tr>
 										</c:when>
 										<c:otherwise>
-											<c:forEach items="${pageInfo.list}" var="entity"
+											<c:forEach items="${list}" var="entity"
 												varStatus="status">
 												<tr>
+												<td ><input type="checkbox" class="fill listen-1-2" value="${entity.id}" name="id"/> </td>
 													<td>${status.index+1}</td>
-													<td>${entity.id}</td>
-													<td>${entity.id}</td>
+													<td>${entity.name}</td>
+													<td>${entity.title}</td>
+													<td>${entity.update_time}</td>
+													<td>${entity.view_count}</td>
+													<td><a href="edit.action?id=${entity.id}">
+															<button class="button wathet">
+																<span class="icon-edit"></span>编辑
+															</button>
+													</a></td>
+													
 												</tr>
 											</c:forEach>
 										</c:otherwise>

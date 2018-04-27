@@ -15,18 +15,26 @@
 		<result column="view_count" property="view_count" />
 		<result column="update_time" property="update_time" />
 		<result column="status" property="status" />
+		
+		<result column="name" property="name" />
 	</resultMap>
 	
 	<!-- 查询所有文章分类 -->
 	<select id="listNormal" resultMap="ArticleInfoMap">
 		SELECT
-			*
+			ai.id,
+			ti.name,
+			ai.title,
+			date_format(ai.update_time,'%Y-%c-%d %h:%i:%s') as update_time,
+			ai.view_count
 		FROM
-			article_info
+			article_info ai,
+			type_info ti
 		WHERE
-			status = '1'
+			ai.type_id=ti.id
+		AND	status = '1'
 		ORDER BY
-			update_time DESC
+			ai.update_time DESC
 	</select>
 
 	<!-- 查询单个文章的信息 -->
@@ -36,8 +44,50 @@
 		FROM
 			article_info
 		WHERE
-			id=${id}
+			id=#{id}
 	</select>
+	
+	<!-- 新增 -->
+	<insert id="insert">
+		INSERT INTO article_info
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="typeId!=null and typeId!=''">type_id,</if>
+			<if test="title!=null and title!=''">title,</if>
+			<if test="content!=null and content!=''">content,</if>
+			<if test="content_text!=null and content_text!=''">content_text,</if>
+			<if test="cover!=null and cover!=''">cover,</if>
+			<if test="view_count!=null and view_count!=''">view_count,</if>
+			<if test="update_time!=null and update_time!=''">update_time,</if>
+			<if test="status!=null and status!=''">status,</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="typeId!=null and typeId!=''">#{typeId},</if>
+			<if test="title!=null and title!=''">#{title},</if>
+			<if test="content!=null and content!=''">#{content},</if>
+			<if test="content_text!=null and content_text!=''">#{content_text},</if>
+			<if test="cover!=null and cover!=''">#{cover},</if>
+			<if test="view_count!=null and view_count!=''">#{view_count},</if>
+			<if test="update_time!=null and update_time!=''">#{update_time},</if>
+			<if test="status!=null and status!=''">#{status},</if>
+		</trim>
+	</insert>
+	
+	<!-- 更新 -->
+	<update id="update">
+	UPDATE article_info
+	<set>
+		<if test="typeId!=null and typeId!=''">type_id=#{typeId},</if>
+		<if test="title!=null and title!=''">title=#{title},</if>
+		<if test="content!=null and content!=''">content=#{content},</if>
+		<if test="content_text!=null and content_text!=''">content_text=#{content_text},</if>
+		<if test="cover!=null and cover!=''">cover=#{cover},</if>
+		<if test="view_count!=null and view_count!=''">view_count=#{view_count},</if>
+		<if test="update_time!=null and update_time!=''">update_time=#{update_time},</if>
+		<if test="status!=null and status!=''">status=#{status},</if>
+	</set>
+	WHERE id = #{id}
+</update>
+	
 	
 	
 	

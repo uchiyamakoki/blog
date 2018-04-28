@@ -42,7 +42,7 @@
 						<div class="main">
 							<!--表单-->
 							<form id="form">
-							<input type="hidden" name="id" value="${articleInfo.id}" />
+							<input type="hidden" name="id" value="${id}" />
 								<!--输入框-->
 								<div class="unit">
 									<div class="left">

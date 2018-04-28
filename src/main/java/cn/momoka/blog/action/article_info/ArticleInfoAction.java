@@ -78,6 +78,8 @@ public class ArticleInfoAction {
 		}
 		//查询所有文章分类
 		map.put("typeList", typeInfoService.list());
+		map.put("id", id);
+		
 		return "admin/article_info/edit";
 	}
 	/*

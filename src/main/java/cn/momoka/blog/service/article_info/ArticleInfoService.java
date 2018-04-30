@@ -3,6 +3,7 @@ package cn.momoka.blog.service.article_info;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,6 +30,14 @@ public class ArticleInfoService {
 		return iArticleInfoDAO.listNormal();
 	}
 	/*
+	 * 查询所有文章
+	 */
+	public List<ArticleInfo> list(Map<String, Object> param) {
+		// TODO Auto-generated method stub
+		return iArticleInfoDAO.list(param);
+	}
+	
+	/*
 	 * 查询单个文章的信息
 	 */
 	public ArticleInfo selectById(String id) {
@@ -54,5 +63,6 @@ public class ArticleInfoService {
 			iArticleInfoDAO.update(articleInfo);
 		}
 	}
+	
 
 }

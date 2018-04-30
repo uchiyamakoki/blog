@@ -36,6 +36,29 @@
 		ORDER BY
 			ai.update_time DESC
 	</select>
+	
+	<!-- 查询所有文章-->
+	<select id="list" resultMap="ArticleInfoMap">
+		SELECT
+			ai.id,
+			ti.name,
+			ai.title,
+			date_format(ai.update_time,'%Y-%c-%d %h:%i:%s') as update_time,
+			ai.view_count
+		FROM
+			article_info ai,
+			type_info ti
+		WHERE
+			ai.type_id=ti.id
+			<if test="status!=null and status!=''">AND ai.status=#{status}</if>
+			<if test="typeId!=null and typeId!=''">AND ai.type_id=#{typeId}</if>
+			<if test="startDate!=null and startDate!=''">
+			AND ai.update_time BETWEEN #{startDate} AND #{endDate}
+			</if>
+			<if test="keyWord!=null and keyWord!=''">AND ai.title LIKE #{keyWord}</if>
+		ORDER BY
+			ai.update_time DESC
+	</select>
 
 	<!-- 查询单个文章的信息 -->
 	<select id="selectById" resultMap="ArticleInfoMap">

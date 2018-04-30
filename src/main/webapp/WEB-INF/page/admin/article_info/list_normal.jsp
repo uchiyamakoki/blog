@@ -34,24 +34,26 @@
 					<div class="block">
 						<!--页面有多个表格时，可以用于标识表格-->
 						<h2>w文章列表</h2>
-						<!--右上角的返回按钮-->
-						<a href="javascript:history.back();">
-							<button class="button wathet"
-								style="position: absolute; right: 20px; top: 16px;">
-								<span class="icon-arrow_back"></span> 返回
-							</button>
-						</a>
 
 						<!--正文内容-->
 						<div class="main-20">
 							<!--表格上方的搜索操作-->
-							<div style="text-align: right; margin-bottom: 10px;">
+							<!-- 文章分类 -->
+							<div style="text-align: right;margin-bottom: 10px;">
+								<select id="type_id" class="no-shadow">
+								<option value="">请选择</option>
+									<c:forEach items="${typeList}" var="typeInfo"
+										varStatus="status">
+										<option value="${typeInfo.id}" <c:if test="${typeInfo.id==typeId}">selected</c:if>>${typeInfo.name}</option>
+									</c:forEach>		
+								</select>
+								<!-- 日期范围 -->
+								<input type="text" id="date2" class="date" style="width: 300px;"
+									value="" readonly />
 								<!-- 标题检索 -->
-								<input type="text" class="text" id="title" value=""
-									placeholder="检索标题" />
+								<input type="text" class="text" id="title" value="${keyWord}" placeholder="检索文章标题" />
 								<!-- 点击查询按钮 -->
-								<button class="button blue" style="margin-top: -3px;"
-									onclick="search()">
+								<button class="button blue" style="margin-top: -3px;" onclick="search()">
 									<span class="icon-search"></span>
 								</button>
 							</div>
@@ -80,13 +82,13 @@
 								</thead>
 								<tbody>
 									<c:choose>
-										<c:when test="${fn:length(list)==0}">
+										<c:when test="${fn:length(pageInfo.list)==0}">
 											<tr>
 												<td colspan="7" style="text-align: center;">暂无记录</td>
 											</tr>
 										</c:when>
 										<c:otherwise>
-											<c:forEach items="${list}" var="entity"
+											<c:forEach items="${pageInfo.list}" var="entity"
 												varStatus="status">
 												<tr>
 												<td ><input type="checkbox" class="fill listen-1-2" value="${entity.id}" name="id"/> </td>
@@ -108,6 +110,10 @@
 
 								</tbody>
 							</table>
+							<!-- 分页的骚操作 -->
+							<div class="page">
+								<ul id="page" class="pagination"></ul>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -115,5 +121,57 @@
 		</div>
 	</div>
 </body>
-
+<script>
+	var currentPage = "${pageInfo.pageNum}";
+	var pageCount = "${pageInfo.pages}";
+	
+	javaex.select({
+		id : "type_id",
+		isSearch:false
+	});
+	
+	var startDate="";
+	var endDate="";
+	
+	javaex.date({
+		id : "date2",		// 承载日期组件的id
+		monthNum : 2,		// 2代表选择范围日期
+		alignment:"right",
+		startDate : "${startDate}",	// 开始日期
+		endDate : "${endDate}",		// 结束日期
+		// 重新选择日期之后返回一个时间对象
+		callback : function(rtn) {
+			startDate=rtn.startDate;
+			endDate=rtn.endDate;
+			//alert(rtn.startDate + " - " + rtn.endDate);
+		}
+	});
+	
+	javaex.page({
+		id : "page",
+		pageCount : pageCount, // 总页数
+		currentPage : currentPage,// 默认选中第几页
+		// 返回当前选中的页数
+		callback : function(rtn) {
+			//alert("当前选中的页数：" + rtn.pageNum);
+			search(rtn.pageNum);
+		}
+	});
+	function search(pageNum){
+		if(pageNum==undefined){
+			pageNum=1;
+		}
+		//文章分类
+		var typeId=$("#type_id").val();
+		//关键字检索
+		var keyWord=$("#title").val();
+		//window.location.href = "list_normal.action?pageNum="+rtn.pageNum;
+		window.location.href = "list_normal.action"
+		+"?pageNum="+pageNum
+		+"&typeId="+typeId
+		+"&startDate="+startDate
+		+"&endDate="+endDate
+		+"&keyWord="+keyWord;
+	}
+</script>
 </html>

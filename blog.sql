@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50614
 File Encoding         : 65001
 
-Date: 2018-04-24 22:09:18
+Date: 2018-04-30 17:47:15
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -30,11 +30,15 @@ CREATE TABLE `article_info` (
   `status` int(11) DEFAULT NULL,
   `type_id` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of article_info
 -- ----------------------------
+INSERT INTO `article_info` VALUES ('1', 'BILIBILI WORLD 2018 情报解禁止！', '<p><img src=\"/upload/2018/04/27/76ce7c83-55ad-4cb3-b9c3-1a7ef21578a9.png\"><br></p><p>BILIBILI WORLD 2018 预购规则</p><p>BILIBILI WORLD 2018共分2档票种，分别为：</p><p>VIP票450元、普通票98元。</p><p>注册会员及正式会员均可参与此次预购活动。</p><p>*所有用户最多可预购所有档位的门票共4张。</p><p>*门票为电子票，请保管好电子票二维码，切勿在公共平台发布。入场时请向工作人员出示电子票二维码，电子票截图无法入场。</p><p>参与抢票</p><p>1）注册会员及正式会员均可参与此次预购活动，购买时请注意选择正确的场次。</p><p>2）全平台会员预购开放时间为：6月11日20:00，售完为止。</p><p>3）预购门票前请确保已登录账号，以免错失预购时机。</p><p>4）用户可于哔哩哔哩手机客户端（5.24版本及以上）提前完善个人信息：点击会员购中心，选择购买人信息进行填写。</p><p>5）购买人信息仅限填写大陆地区身份证号及手机号。</p><p>付款流程</p><p>1）成功拍下门票后，请在1分钟内填写购票人信息，并进入付款页面，如未能及时填写完毕，则该门票失效并回到票池。</p><p>2）个人信息填写完毕并进入付款页面后，请在5分钟内完成支付（支付宝、微信、QQ钱包渠道付款，B币余额无法付款，请勿直接充值B币）。5分钟内如未完成支付，则订单失效，门票将回到票池。</p><p>3）成功支付后，即可在订单中心查询相关购票信息。</p><p>查看电子票</p><p>1）电子票二维码可在订单中心内查询。</p>', 'BILIBILI WORLD 2018 预购规则BILIBILI WORLD 2018共分2档票种，分别为：VIP票450元、普通票98元。注册会员及正式会员均可参与此次预购活动。*所有用户最多可预购', 'http://localhost:8080/upload/2018/04/27/b53c9682-11a6-4117-ac5d-f815e3caee7d.png', '1', '2018-04-27 13:42:11', '1', '3');
+INSERT INTO `article_info` VALUES ('2', '｡:.ﾟヽ(｡◕‿◕｡)ﾉﾟ.:｡你等的那个#话题#功能上线了', '<p></p><p><img src=\"/upload/2018/04/27/02947f5b-9ade-4e45-bae6-3159c894d26b.jpg\"><span style=\"color: rgb(0, 0, 0); font-family: monospace; font-size: medium; white-space: pre-wrap;\"><br></span></p><p><span style=\"color: rgb(0, 0, 0); font-family: monospace; font-size: medium; white-space: pre-wrap;\">好消息~好消息，动态#话题#上线啦从前你是不是也会有和动态娘一样的烦恼，喜欢的内容不知道和谁讨论；流行的表情包不知道去哪找；拍了萌宠的照片不知道和谁分享。余一我喜欢你啊！！！</span><br></p><p></p>', '好消息~好消息，动态#话题#上线啦从前你是不是也会有和动态娘一样的烦恼，喜欢的内容不知道和谁讨论；流行的表情包不知道去哪找；拍了萌宠的照片不知道和谁分享。余一我喜欢你啊！！！', 'http://localhost:8080/upload/2018/04/27/4cb5f5d2-a966-4229-9f68-5eb23e37ce50.png', '1', '2018-04-28 22:34:21', '1', '3');
+INSERT INTO `article_info` VALUES ('3', '全明星周末开启！', '<p></p><p></p><p></p><p>我滴天哪！<span style=\"color: rgb(0, 0, 0); font-family: monospace; font-size: medium; white-space: pre-wrap;\">《全职高手》特别篇 每周五12点更新！</span></p><p></p><p></p><p></p>', '我滴天哪！《全职高手》特别篇 每周五12点更新！', 'http://localhost:8080/upload/2018/04/28/dadf382b-c3bf-4eb2-a4ec-58218bc5daf5.jpg', '1', '2018-04-28 22:45:16', '1', '3');
+INSERT INTO `article_info` VALUES ('4', '关于严肃处理求盗版MO8资源的倡议', '<p><span style=\"font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 14px;\">一楼随便镇</span><br></p><p><span style=\"font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 14px;\"><br></span></p>', '一楼随便镇', 'http://localhost:8080/upload/2018/04/30/efb20ec2-1fee-4697-a00c-24e9ec1e00a6.jpg', '1', '2018-04-30 17:18:40', '1', '11');
 
 -- ----------------------------
 -- Table structure for `type_info`
@@ -45,7 +49,7 @@ CREATE TABLE `type_info` (
   `name` varchar(50) DEFAULT NULL,
   `sort` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of type_info
@@ -57,6 +61,7 @@ INSERT INTO `type_info` VALUES ('4', '我是x86', '3');
 INSERT INTO `type_info` VALUES ('8', 'c++', '1');
 INSERT INTO `type_info` VALUES ('9', 'python', '3');
 INSERT INTO `type_info` VALUES ('10', 'linux', '3');
+INSERT INTO `type_info` VALUES ('11', '秋之回忆', '2');
 
 -- ----------------------------
 -- Table structure for `user_info`

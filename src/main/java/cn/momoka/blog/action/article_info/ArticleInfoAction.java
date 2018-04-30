@@ -6,7 +6,9 @@ import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
@@ -23,6 +25,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.google.gson.Gson;
 import com.qiniu.common.QiniuException;
 import com.qiniu.common.Zone;
@@ -54,10 +58,40 @@ public class ArticleInfoAction {
 	 * 查询所有文章(正常)
 	 */
 	@RequestMapping("list_normal.action")
-	public String listNormal(ModelMap map){
+	public String listNormal(ModelMap map,
+			@RequestParam(required = false, value = "typeId") String typeId,
+			@RequestParam(required = false, value = "startDate") String startDate,
+			@RequestParam(required = false, value = "endDate") String endDate,
+			@RequestParam(required = false, value = "keyWord") String keyWord,
+			@RequestParam(value="pageNum", defaultValue="1") int pageNum,
+			@RequestParam(value="pageSize", defaultValue="2") int pageSize){
+		
+		Map<String, Object> param=new HashMap<String, Object>();
+		param.put("typeId", typeId);
+		param.put("startDate", startDate);
+		param.put("endDate", endDate);
+		if(!StringUtils.isEmpty(keyWord)){
+			param.put("keyWord", "%"+keyWord.trim()+"%");
+		}
+		param.put("status", "1");
 		//UserInfo userInfo=userInfoService.selectUser("admin", "1234");
-		List<ArticleInfo> list=articleInfoService.listNormal();
-		map.put("list", list);
+		// pageHelper分页插件
+		// 只需要在查询之前调用，传入当前页码，以及每一页显示多少条
+		PageHelper.startPage(pageNum, pageSize);
+		
+		//List<ArticleInfo> list=articleInfoService.listNormal();
+		List<ArticleInfo> list=articleInfoService.list(param);
+		//map.put("list", list);
+		PageInfo<ArticleInfo> pageInfo = new PageInfo<ArticleInfo>(list);
+		map.put("pageInfo", pageInfo);
+		
+		//查询所有文章分类
+		map.put("typeList", typeInfoService.list());
+		
+		map.put("typeId", typeId);
+		map.put("startDate", startDate);
+		map.put("endDate", endDate);
+		map.put("keyWord", keyWord);
 		return "admin/article_info/list_normal";
 	}
 	

@@ -114,6 +114,30 @@
 							<div class="page">
 								<ul id="page" class="pagination"></ul>
 							</div>
+							<!--块元素-->
+							<div class="block no-shadow">
+								<!--banner用来修饰块元素的名称-->
+								<div class="banner">
+									<p class="tab fixed">
+										批量操作<span class="hint">Batch Opt</span>
+									</p>
+								</div>
+								<!--正文内容-->
+								<div class="main" style="margin-bottom: 200px">
+								<label zoom="1.2"><input type="radio" class="fill" name="radio" value="move"/>批量移动到版块</label>
+									<select id="type_id2" class="no-shadow">
+										<c:forEach items="${typeList}" var="typeInfo"
+										varStatus="status">
+										<option value="${typeInfo.id}" >${typeInfo.name}</option>
+									</c:forEach>	
+									</select> 
+									<br  />
+								<label zoom="1.2"><input type="radio" class="fill" name="radio" value="recycle"/>批量删除</label>
+								<br  />
+								<button id="submit" class="button green" style="margin-top: 20px;"><span class="icon-check"></span>提交</button>
+								</div>
+								
+							</div>
 						</div>
 					</div>
 				</div>
@@ -127,6 +151,11 @@
 	
 	javaex.select({
 		id : "type_id",
+		isSearch:false
+	});
+	
+	javaex.select({
+		id : "type_id2",
 		isSearch:false
 	});
 	
@@ -173,5 +202,90 @@
 		+"&endDate="+endDate
 		+"&keyWord="+keyWord;
 	}
+	//批量提交点击事件
+	$("#submit").click(function(){
+		var idArr=new Array();
+		$(':checkbox[name="id"]:checked').each(function(){
+			idArr.push($(this).val());
+		});
+		//判断至少选择一条记录
+		if(idArr.length==0){
+			javaex.optTip({
+				content : "至少选择一条记录",
+				type : "error"
+			});
+		}
+		//判断选择了哪一个单选框进行操作
+		var opt=$(':radio[name="radio"]:checked').val();
+		if(opt=="move"){
+			//console.log("move");
+			//获取目标的分类的id
+			var typeId=$("#type_id2").val();
+			$.ajax({
+				url : "move.json",
+				type : "POST",
+				dataType : "json",
+				traditional : "true",
+				data : {
+					"idArr" : idArr,
+					"typeId" : typeId
+				},
+				success : function(rtn) {
+					if(rtn.code=="000000"){
+						javaex.optTip({
+							content : rtn.message
+						});
+						// 建议延迟加载
+						setTimeout(function() {
+							// 载入数据
+							//$("#content").append(resultHtml);
+							// 每次数据载入后，必须重置（需要传入数据区域的id）
+							//javaex.resetLoad("content");
+							window.location.reload();
+						}, 2000);
+						//window.location.reload();
+					}else{
+						javaex.optTip({
+							content : rtn.message,
+							type: "error"
+						});
+					}
+				}
+			});
+		}else if (opt=="recycle") {
+			//console.log("delete");
+			$.ajax({
+				url : "recycle.json",
+				type : "POST",
+				dataType : "json",
+				traditional : "true",
+				data : {
+					"idArr" : idArr,
+					"status" : "0"
+				},
+				success : function(rtn) {
+					if(rtn.code=="000000"){
+						javaex.optTip({
+							content : rtn.message
+						});
+						// 建议延迟加载
+						setTimeout(function() {
+							// 载入数据
+							//$("#content").append(resultHtml);
+							// 每次数据载入后，必须重置（需要传入数据区域的id）
+							//javaex.resetLoad("content");
+							window.location.reload();
+						}, 2000);
+						//window.location.reload();
+					}else{
+						javaex.optTip({
+							content : rtn.message,
+							type: "error"
+						});
+					}
+				}
+			});
+		}
+	});
 </script>
 </html>

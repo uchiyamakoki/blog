@@ -110,6 +110,20 @@
 	</set>
 	WHERE id = #{id}
 </update>
+
+<!-- 批量移动 -->
+	<update id="batchUpdate">
+	UPDATE article_info
+	<set>
+		<if test="typeId!=null and typeId!=''">type_id=#{typeId},</if>
+		<if test="status!=null and status!=''">status=#{status},</if>
+		
+	</set>
+	WHERE id IN
+	<foreach collection="idArr" index="index" item="item" open="(" separator="," close=")">
+		#{item}
+	</foreach>
+</update>
 	
 	
 	

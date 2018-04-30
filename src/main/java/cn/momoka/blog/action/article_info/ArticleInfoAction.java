@@ -126,6 +126,40 @@ public class ArticleInfoAction {
 		return Result.success();
 	}
 	
+	/*
+	 * 批量移动文章
+	 */
+	@RequestMapping("move.json")
+	@ResponseBody
+	public Result move(
+			@RequestParam( value = "idArr") String[] idArr,
+			@RequestParam( value = "typeId") String typeId) {
+		//articleInfoService.batchUpdate(idArr,typeId);
+		Map<String, Object> param=new HashMap<String, Object>();
+		param.put("idArr", idArr);
+		param.put("typeId", typeId);
+		
+		articleInfoService.batchUpdate(param);
+		return Result.success();
+	}
+	
+	/*
+	 * 批量删除文章到回收站
+	 */
+	@RequestMapping("recycle.json")
+	@ResponseBody
+	public Result delete(
+			@RequestParam( value = "idArr") String[] idArr,
+			@RequestParam( value = "status") String status) {
+		
+		Map<String, Object> param=new HashMap<String, Object>();
+		param.put("idArr", idArr);
+		param.put("status", status);
+		
+		articleInfoService.batchUpdate(param);
+		return Result.success();
+	}
+	
 	/**
 	 * 上传文件到磁盘（物理路径）
 	 * @throws IOException 

@@ -34,6 +34,14 @@ public interface IArticleInfoDAO {
 	 * 更新文章
 	 */
 	void update(ArticleInfo articleInfo);
+	/*
+	 * 批量移动文章到某个分类
+	 * idArr 主键数组
+	 * typeId 文章分类的id
+	 */
+	//void batchUpdate(@Param("idArr") String[] idArr,@Param("typeId") String typeId);
+	
+	void batchUpdate(Map<String, Object> param);
 
 	
 

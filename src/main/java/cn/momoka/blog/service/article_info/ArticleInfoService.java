@@ -63,6 +63,26 @@ public class ArticleInfoService {
 			iArticleInfoDAO.update(articleInfo);
 		}
 	}
+	/*
+	 * 批量移动文章到某个分类
+	 * idArr 主键数组
+	 * typeId 文章分类的id
+	 */
+	/*
+	 *public void batchUpdate(String[] idArr, String typeId) {
+		
+		iArticleInfoDAO.batchUpdate(idArr,typeId);
+		
+	} 
+	 */
+	
+	/*
+	 * 批量更新
+	 */
+	public void batchUpdate(Map<String, Object> param) {
+		// TODO Auto-generated method stub
+		iArticleInfoDAO.batchUpdate(param);
+	}
 	
 
 }

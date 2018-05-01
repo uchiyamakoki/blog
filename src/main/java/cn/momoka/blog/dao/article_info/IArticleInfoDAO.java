@@ -47,9 +47,16 @@ public interface IArticleInfoDAO {
 	 * 批量最好注解，不然xml要写array
 	 */
 	void batchDelete(@Param("idArr") String[] idArr);
+	/*
+	 * 根据文章分类查询文章的数量
+	 * typeIdArr
+	 * status
+	 */
+	int countByTypeIdArr(@Param("typeIdArr") String[] typeIdArr,@Param("status") String status);
+	/*
+	 * 批量删除回收站根据分类id   删除分类时
+	 */
+	void batchDeleteByTypeIdArr(@Param("typeIdArr") String[] typeIdArr);
 
-	
-
-	
 
 }

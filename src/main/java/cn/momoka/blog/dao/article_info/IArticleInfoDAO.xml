@@ -70,6 +70,20 @@
 			id=#{id}
 	</select>
 	
+	<!-- 根据文章分类，查询文章的数量 -->
+	<select id="countByTypeIdArr" resultType="int">
+	SELECT
+		COUNT(*)
+	FROM
+		article_info
+	WHERE
+		STATUS = #{status}
+	AND type_id IN
+		<foreach collection="typeIdArr" index="index" item="item" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+	</select>
+	
 	<!-- 新增 -->
 	<insert id="insert">
 		INSERT INTO article_info
@@ -125,10 +139,18 @@
 	</foreach>
 </update>
 
-<!-- 批量删除 -->
+<!-- 根据文章主键 批量删除 -->
 	<delete id="batchDelete">
 	DELETE FROM article_info WHERE id IN
 	<foreach collection="idArr" index="index" item="item" open="(" separator="," close=")">
+		#{item}
+	</foreach>
+	</delete>
+	
+	<!--根据文章分类 批量删除 -->
+	<delete id="batchDeleteByTypeIdArr">
+	DELETE FROM article_info WHERE type_id IN
+	<foreach collection="typeIdArr" index="index" item="item" open="(" separator="," close=")">
 		#{item}
 	</foreach>
 	</delete>

@@ -48,12 +48,14 @@ public class TypeInfoAction {
 		typeInfoService.save(idArr,sortArr,nameArr);
 		return Result.success();
 	}
-	
+	/*
+	 * 批量删除文章分类
+	 */
 	@RequestMapping("delete.json")
 	@ResponseBody
 	public Result login3(
 			@RequestParam(value = "idArr") String[] idArr
-			) {
+			) throws MomokaException {
 		typeInfoService.delete(idArr);
 		return Result.success();
 	}

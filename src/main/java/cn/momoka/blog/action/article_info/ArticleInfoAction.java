@@ -64,7 +64,7 @@ public class ArticleInfoAction {
 			@RequestParam(required = false, value = "endDate") String endDate,
 			@RequestParam(required = false, value = "keyWord") String keyWord,
 			@RequestParam(value="pageNum", defaultValue="1") int pageNum,
-			@RequestParam(value="pageSize", defaultValue="2") int pageSize){
+			@RequestParam(value="pageSize", defaultValue="10") int pageSize){
 		
 		Map<String, Object> param=new HashMap<String, Object>();
 		param.put("typeId", typeId);

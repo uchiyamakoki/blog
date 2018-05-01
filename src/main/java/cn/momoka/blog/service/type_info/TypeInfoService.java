@@ -6,8 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import com.qiniu.common.QiniuException;
+
+import cn.momoka.blog.dao.article_info.IArticleInfoDAO;
 import cn.momoka.blog.dao.type_info.ITypeInfoDAO;
 import cn.momoka.blog.dao.user_info.IUserInfoDAO;
+import cn.momoka.blog.exception.MomokaException;
 import cn.momoka.blog.view.TypeInfo;
 import cn.momoka.blog.view.UserInfo;
 
@@ -16,6 +20,9 @@ public class TypeInfoService {
 	
 	@Autowired
 	private ITypeInfoDAO iTypeInfoDAO;
+	
+	@Autowired
+	private IArticleInfoDAO iArticleInfoDAO;
 
 	/*
 	 * 查询所有文章分类
@@ -47,8 +54,18 @@ public class TypeInfoService {
 	 * 删除文章分类
 	 * iddar: 主键数组
 	 */
-	public void delete(String[] idArr) {
-		// TODO Auto-generated method stub
+	public void delete(String[] idArr) throws MomokaException {
+		//判断该分类id有没有被使用
+		int nCount=iArticleInfoDAO.countByTypeIdArr(idArr,"1");
+		
+		if(nCount>0){
+			//被占用了，禁止删除
+			throw new MomokaException("存在已被使用的分类，无法删除");
+		}
+		//先删除所有回收站的文章
+		iArticleInfoDAO.batchDeleteByTypeIdArr(idArr);
+		
+		//然后删除该分类
 		iTypeInfoDAO.delete(idArr);
 	}
 	

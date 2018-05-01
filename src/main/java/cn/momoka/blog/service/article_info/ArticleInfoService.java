@@ -83,6 +83,13 @@ public class ArticleInfoService {
 		// TODO Auto-generated method stub
 		iArticleInfoDAO.batchUpdate(param);
 	}
+	/*
+	 * 批量删除
+	 */
+	public void batchDelete(String[] idArr) {
+		// TODO Auto-generated method stub
+		iArticleInfoDAO.batchDelete(idArr);
+	}
 	
 
 }

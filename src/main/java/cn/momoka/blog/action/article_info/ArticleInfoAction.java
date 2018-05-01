@@ -96,6 +96,48 @@ public class ArticleInfoAction {
 	}
 	
 	/*
+	 * 查询所有文章(回收站)
+	 */
+	@RequestMapping("list_recycle.action")
+	public String listRecycle(ModelMap map,
+			@RequestParam(required = false, value = "typeId") String typeId,
+			@RequestParam(required = false, value = "startDate") String startDate,
+			@RequestParam(required = false, value = "endDate") String endDate,
+			@RequestParam(required = false, value = "keyWord") String keyWord,
+			@RequestParam(value="pageNum", defaultValue="1") int pageNum,
+			@RequestParam(value="pageSize", defaultValue="2") int pageSize){
+		
+		Map<String, Object> param=new HashMap<String, Object>();
+		param.put("typeId", typeId);
+		param.put("startDate", startDate);
+		param.put("endDate", endDate);
+		if(!StringUtils.isEmpty(keyWord)){
+			param.put("keyWord", "%"+keyWord.trim()+"%");
+		}
+		param.put("status", "0");
+		//UserInfo userInfo=userInfoService.selectUser("admin", "1234");
+		// pageHelper分页插件
+		// 只需要在查询之前调用，传入当前页码，以及每一页显示多少条
+		PageHelper.startPage(pageNum, pageSize);
+		
+		//List<ArticleInfo> list=articleInfoService.listNormal();
+		List<ArticleInfo> list=articleInfoService.list(param);
+		//map.put("list", list);
+		PageInfo<ArticleInfo> pageInfo = new PageInfo<ArticleInfo>(list);
+		map.put("pageInfo", pageInfo);
+		
+		//查询所有文章分类
+		map.put("typeList", typeInfoService.list());
+		
+		map.put("typeId", typeId);
+		map.put("startDate", startDate);
+		map.put("endDate", endDate);
+		map.put("keyWord", keyWord);
+		return "admin/article_info/list_recycle";
+	}
+	
+	
+	/*
 	 * 文章编辑
 	 */
 	@RequestMapping("edit.action")
@@ -144,9 +186,9 @@ public class ArticleInfoAction {
 	}
 	
 	/*
-	 * 批量删除文章到回收站
+	 * 批量删除文章到回收站,其实就是批量更新文章的状态
 	 */
-	@RequestMapping("recycle.json")
+	@RequestMapping("update_status.json")
 	@ResponseBody
 	public Result delete(
 			@RequestParam( value = "idArr") String[] idArr,
@@ -157,6 +199,18 @@ public class ArticleInfoAction {
 		param.put("status", status);
 		
 		articleInfoService.batchUpdate(param);
+		return Result.success();
+	}
+
+	/*
+	 * 批量删除文章
+	 */
+	@RequestMapping("delete.json")
+	@ResponseBody
+	public Result delete2(
+			@RequestParam( value = "idArr") String[] idArr) {
+		
+		articleInfoService.batchDelete(idArr);
 		return Result.success();
 	}
 	

@@ -124,6 +124,14 @@
 		#{item}
 	</foreach>
 </update>
+
+<!-- 批量删除 -->
+	<delete id="batchDelete">
+	DELETE FROM article_info WHERE id IN
+	<foreach collection="idArr" index="index" item="item" open="(" separator="," close=")">
+		#{item}
+	</foreach>
+	</delete>
 	
 	
 	

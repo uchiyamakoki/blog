@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>文章列表</title>
+<title>回收站</title>
 </head>
 
 <body>
@@ -25,7 +25,7 @@
 				<div class="content-header">
 					<div class="breadcrumb">
 						<span>文章管理</span> <span class="divider">/</span> <span
-							class="active">文章列表</span>
+							class="active">回收站</span>
 					</div>
 				</div>
 				<!--主体内容-->
@@ -33,7 +33,7 @@
 					<!--块元素-->
 					<div class="block">
 						<!--页面有多个表格时，可以用于标识表格-->
-						<h2>w文章列表</h2>
+						<h2>回收站</h2>
 
 						<!--正文内容-->
 						<div class="main-20">
@@ -57,17 +57,6 @@
 									<span class="icon-search"></span>
 								</button>
 							</div>
-
-							<!--表格上方的操作元素，添加、删除等-->
-							<div class="operation-wrap">
-								<div class="buttons-wrap">
-									<a href="edit.action">
-									<button id="add" class="button blue"><span class="icon-plus"></span>添加</button>
-									</a>
-									
-									
-								</div>
-							</div>
 							<table id="table" class="table">
 								<thead>
 									<tr>
@@ -77,7 +66,6 @@
 										<th>文章标题</th>
 										<th>撰写日期</th>
 										<th>阅读量</th>
-										<th>编辑</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -96,13 +84,7 @@
 													<td>${entity.name}</td>
 													<td>${entity.title}</td>
 													<td>${entity.update_time}</td>
-													<td>${entity.view_count}</td>
-													<td><a href="edit.action?id=${entity.id}">
-															<button class="button wathet">
-																<span class="icon-edit"></span>编辑
-															</button>
-													</a></td>
-													
+													<td>${entity.view_count}</td>			
 												</tr>
 											</c:forEach>
 										</c:otherwise>
@@ -124,15 +106,9 @@
 								</div>
 								<!--正文内容-->
 								<div class="main" style="margin-bottom: 200px">
-								<label zoom="1.2"><input type="radio" class="fill" name="radio" value="move"/>批量移动到分类</label>
-									<select id="type_id2" class="no-shadow">
-										<c:forEach items="${typeList}" var="typeInfo"
-										varStatus="status">
-										<option value="${typeInfo.id}" >${typeInfo.name}</option>
-									</c:forEach>	
-									</select> 
+								<label zoom="1.2"><input type="radio" class="fill" name="radio" value="back"/>批量还原</label>
 									<br  />
-								<label zoom="1.2"><input type="radio" class="fill" name="radio" value="recycle"/>批量删除</label>
+								<label zoom="1.2"><input type="radio" class="fill" name="radio" value="delete"/>彻底删除</label>
 								<br  />
 								<button id="submit" class="button green" style="margin-top: 20px;"><span class="icon-check"></span>提交</button>
 								</div>
@@ -195,7 +171,7 @@
 		//关键字检索
 		var keyWord=$("#title").val();
 		//window.location.href = "list_normal.action?pageNum="+rtn.pageNum;
-		window.location.href = "list_normal.action"
+		window.location.href = "list_recycle.action"
 		+"?pageNum="+pageNum
 		+"&typeId="+typeId
 		+"&startDate="+startDate
@@ -217,18 +193,16 @@
 		}
 		//判断选择了哪一个单选框进行操作
 		var opt=$(':radio[name="radio"]:checked').val();
-		if(opt=="move"){
-			//console.log("move");
-			//获取目标的分类的id
-			var typeId=$("#type_id2").val();
+		if(opt=="back"){
+			//批量还原
 			$.ajax({
-				url : "move.json",
+				url : "update_status.json",
 				type : "POST",
 				dataType : "json",
 				traditional : "true",
 				data : {
 					"idArr" : idArr,
-					"typeId" : typeId
+					"status" : "1"
 				},
 				success : function(rtn) {
 					if(rtn.code=="000000"){
@@ -252,16 +226,15 @@
 					}
 				}
 			});
-		}else if (opt=="recycle") {
-			//console.log("delete");
+		}else if (opt=="delete") {
+			//彻底删除
 			$.ajax({
-				url : "update_status.json",
+				url : "delete.json",
 				type : "POST",
 				dataType : "json",
 				traditional : "true",
 				data : {
-					"idArr" : idArr,
-					"status" : "0"
+					"idArr" : idArr
 				},
 				success : function(rtn) {
 					if(rtn.code=="000000"){

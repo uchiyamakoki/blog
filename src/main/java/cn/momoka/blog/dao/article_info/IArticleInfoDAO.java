@@ -42,6 +42,11 @@ public interface IArticleInfoDAO {
 	//void batchUpdate(@Param("idArr") String[] idArr,@Param("typeId") String typeId);
 	
 	void batchUpdate(Map<String, Object> param);
+	/*
+	 * 批量删除文章
+	 * 批量最好注解，不然xml要写array
+	 */
+	void batchDelete(@Param("idArr") String[] idArr);
 
 	
 

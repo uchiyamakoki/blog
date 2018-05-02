@@ -43,6 +43,8 @@
 			ai.id,
 			ti.name,
 			ai.title,
+			ai.cover,
+			ai.content_text,
 			date_format(ai.update_time,'%Y-%c-%d %h:%i:%s') as update_time,
 			ai.view_count
 		FROM

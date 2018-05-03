@@ -68,6 +68,14 @@ public class TypeInfoService {
 		//然后删除该分类
 		iTypeInfoDAO.delete(idArr);
 	}
+
+	/*
+	 * 根据主键查询文章分类
+	 */
+	public TypeInfo selectById(String typeId) {
+		// TODO Auto-generated method stub
+		return iTypeInfoDAO.selectById(typeId);
+	}
 	
 	
 	

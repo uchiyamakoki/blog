@@ -20,6 +20,16 @@
 		ORDER BY
 			sort
 	</select>
+	
+	<!-- 根据主键查询文章分类  注意id要和方法相同-->
+	<select id="selectById" resultMap="TypeInfoMap">
+		SELECT
+			*
+		FROM
+			type_info
+		WHERE
+			id=#{id}
+	</select>
 
 	<!-- 插入一条新的数据 -->
 	<insert id="insert">

@@ -31,7 +31,7 @@
 		<div id="top">
 			<c:import url="header.jsp"></c:import>
 		</div>
-		<h1 id="big-title">翻车鱼的个人博文</h1>
+		<h1 id="big-title">文章分类:${typeInfo.name}</h1>
 	</div>
 
 	<div id="content">

@@ -34,4 +34,9 @@ public interface ITypeInfoDAO {
 	 */
 	int delete(@Param("idArr") String[] idArr);
 
+	/*
+	 * 根据主键查询文章分类
+	 */
+	TypeInfo selectById(String id);
+
 }

@@ -41,6 +41,7 @@
 	<select id="list" resultMap="ArticleInfoMap">
 		SELECT
 			ai.id,
+			ai.type_id,
 			ti.name,
 			ai.title,
 			ai.cover,

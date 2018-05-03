@@ -81,4 +81,38 @@ public class PortalAction {
 		return "portal/index";
 	}
 	
+	/*
+	 * 页面一加载就像后台请求文章分类的数据
+	 */
+	@RequestMapping("get_type.json")
+	@ResponseBody
+	public Result getType(ArticleInfo articleInfo) {
+		List<TypeInfo> typeList=typeInfoService.list();
+		return Result.success().add("typeList", typeList);
+	}
+	
+	/*
+	 * 查询所有文章分类()
+	 */
+	@RequestMapping("type.action")
+	public String type(ModelMap map,
+			@RequestParam(value="typeId") String typeId,
+			@RequestParam(value="pageNum", defaultValue="1") int pageNum,
+			@RequestParam(value="pageSize", defaultValue="3") int pageSize){
+		
+		Map<String, Object> param=new HashMap<String, Object>();
+		param.put("typeId", typeId);
+		param.put("status", "1");
+		
+		PageHelper.startPage(pageNum, pageSize);
+		
+		List<ArticleInfo> list=articleInfoService.list(param);
+
+		PageInfo<ArticleInfo> pageInfo = new PageInfo<ArticleInfo>(list);
+		map.put("pageInfo", pageInfo);
+		map.put("typeInfo", typeInfoService.selectById(typeId));
+
+		return "portal/type";
+	}
+	
 }

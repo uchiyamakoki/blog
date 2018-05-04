@@ -42,7 +42,17 @@ public class ArticleInfoService {
 	 */
 	public ArticleInfo selectById(String id) {
 		// TODO Auto-generated method stub
-		return iArticleInfoDAO.selectById(id);
+		ArticleInfo articleInfo=iArticleInfoDAO.selectById(id);
+		if(articleInfo!=null){
+			//获得当前浏览量
+			int nViewCount=articleInfo.getView_count();
+			//浏览量自增
+			nViewCount++;
+			articleInfo.setView_count(nViewCount);
+			//iArticleInfoDAO.update(articleInfo); 效率太低
+			iArticleInfoDAO.updateViewCount(id,nViewCount);
+		}
+		return articleInfo;
 	}
 	/*
 	 * 保存文章

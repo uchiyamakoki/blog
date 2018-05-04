@@ -57,6 +57,13 @@ public interface IArticleInfoDAO {
 	 * 批量删除回收站根据分类id   删除分类时
 	 */
 	void batchDeleteByTypeIdArr(@Param("typeIdArr") String[] typeIdArr);
+	
+	/*
+	 * 更新浏览次数
+	 * id 主键
+	 * viewCount 浏览量
+	 */
+	void updateViewCount(@Param("id") String id,@Param("ViewCount") int ViewCount);
 
 
 }

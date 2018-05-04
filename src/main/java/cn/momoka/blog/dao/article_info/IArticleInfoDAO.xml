@@ -66,11 +66,22 @@
 	<!-- 查询单个文章的信息 -->
 	<select id="selectById" resultMap="ArticleInfoMap">
 		SELECT
-			*
+			ai.id,
+			ai.type_id,
+			ti.name,
+			ai.title,
+			ai.cover,
+			ai.content,
+			ai.content_text,
+			date_format(ai.update_time,'%Y-%c-%d %h:%i:%s') as update_time,
+			ai.view_count
 		FROM
-			article_info
+			article_info ai,
+			type_info ti
 		WHERE
-			id=#{id}
+			ai.type_id = ti.id
+		AND ai.status = '1'
+		AND ai.id = #{id}
 	</select>
 	
 	<!-- 根据文章分类，查询文章的数量 -->
@@ -111,6 +122,15 @@
 			<if test="status!=null and status!=''">#{status},</if>
 		</trim>
 	</insert>
+	
+	<!-- 更新 -->
+	<update id="updateViewCount">
+	UPDATE article_info
+	<set>
+		<if test="ViewCount!=null and ViewCount!=''">view_count=#{ViewCount},</if>
+	</set>
+	WHERE id = #{id}
+</update>
 	
 	<!-- 更新 -->
 	<update id="update">

@@ -47,9 +47,10 @@
 							</div>
 							<div class="main-15">
 								<h4><a href="${pageContext.request.contextPath}/portal/type.action?typeId=${entity.typeId}">${entity.name}</a></h4>
-								<h2><a href="#"><b>${entity.title}</b></a></h2>
+								<h2><a href="${pageContext.request.contextPath}/portal/article.action?id=${entity.id}"><b>${entity.title}</b></a></h2>
 								<p>
-									${entity.content_text}<a href="#"> 阅读更多…</a>
+									${entity.content_text}
+									<a href="${pageContext.request.contextPath}/portal/article.action?id=${entity.id}">阅读更多…</a>
 								</p>
 								<div class="day">${entity.update_time}</div>
 							</div>

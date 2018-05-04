@@ -115,4 +115,17 @@ public class PortalAction {
 		return "portal/type";
 	}
 	
+	/*
+	 * 根据主键查询文章
+	 */
+	@RequestMapping("article.action")
+	public String article(ModelMap map,
+			@RequestParam(value="id") String id){
+		
+		ArticleInfo articleInfo=articleInfoService.selectById(id);
+		map.put("articleInfo", articleInfo);
+
+		return "portal/article";
+	}
+	
 }

@@ -39,7 +39,7 @@
 				<div></div>
 				<div id="main-content" style="min-width: 950px;margin-top: 100px;margin-bottom: 40px;">
 					<div class="content-header">
-						<span class="icon-home active"> 主页</span>
+						<a href="${pageContext.request.contextPath}/"><span class="icon-home active"> 主页</span></a>
 						<span class="divider">/</span>
 						<span class="active"><a href="${pageContext.request.contextPath}/portal/type.action?typeId=${articleInfo.typeId}">${articleInfo.name}</a></span>
 						<span class="divider">/</span>

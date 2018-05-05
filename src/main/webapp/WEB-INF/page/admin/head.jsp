@@ -29,5 +29,5 @@
 					href="${pageContext.request.contextPath}/admin/login_out.action">退出</a></li>
 				<li>
 				</li>
-				<li><a href="${pageContext.request.contextPath}/portal/index.action">首页</a></li>
+				<li><a href="${pageContext.request.contextPath}/">首页</a></li>
 			</ul>

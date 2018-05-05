@@ -128,4 +128,13 @@ public class PortalAction {
 		return "portal/article";
 	}
 	
+	/*
+	 * 查询所有文章分类()
+	 */
+	@RequestMapping("about.action")
+	public String about(ModelMap map){
+
+		return "portal/about";
+	}
+	
 }

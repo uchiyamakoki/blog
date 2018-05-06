@@ -31,7 +31,7 @@
 		<div id="top">
 			<c:import url="header.jsp"></c:import>
 		</div>
-		<h1 id="big-title">文章分类:${typeInfo.name}</h1>
+		<h1 id="big-title">搜索关键字:${keyWord}</h1>
 	</div>
 
 	<div id="content">
@@ -127,9 +127,9 @@
 		// 返回当前选中的页数
 		callback:function(rtn) {
 			//alert(rtn);
-			window.location.href = "${pageContext.request.contextPath}/portal/type.action"
+			window.location.href = "${pageContext.request.contextPath}/portal/search.action"
 				+"?pageNum="+rtn.pageNum
-				+"&typeId=${typeInfo.id}";
+				+"&keyWord=${keyWord}";
 		}
 	});
 </script>

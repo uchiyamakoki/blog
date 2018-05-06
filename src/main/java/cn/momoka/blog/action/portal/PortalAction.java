@@ -137,4 +137,29 @@ public class PortalAction {
 		return "portal/about";
 	}
 	
+	/*
+	 * 查询所有文章(正常)
+	 */
+	@RequestMapping("search.action")
+	public String search(ModelMap map,
+			@RequestParam(value="keyWord") String keyWord,
+			@RequestParam(value="pageNum", defaultValue="1") int pageNum,
+			@RequestParam(value="pageSize", defaultValue="3") int pageSize){
+		
+		Map<String, Object> param=new HashMap<String, Object>();
+		if(!StringUtils.isEmpty(keyWord)){
+			param.put("keyWord", "%"+keyWord.trim()+"%");
+		}
+		param.put("status", "1");
+
+		PageHelper.startPage(pageNum, pageSize);
+		
+		List<ArticleInfo> list=articleInfoService.list(param);
+		PageInfo<ArticleInfo> pageInfo = new PageInfo<ArticleInfo>(list);
+		map.put("pageInfo", pageInfo);
+		
+		map.put("keyWord", keyWord);
+		return "portal/search";
+	}
+	
 }

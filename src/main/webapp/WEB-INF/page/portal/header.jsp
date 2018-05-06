@@ -17,13 +17,21 @@
 					</ul>
 					<div id="search" class="hide">
 						<span class="search-field-wrapper form-group">
-							<input type="text" class="search" placeholder="搜索…" value="" name="">
+							<input type="text" class="search" placeholder="搜索…" value="" onkeydown="if(event.keyCode==13){search(this.value);}">
 						</span>
 						<span id="close-search" class="icon-close" style="font-size: 16px;"></span>
 					</div>
 				</div>
 			</div>
 <script>
+	//搜索
+	function search(keyWord){
+		//判断关键字是否为空
+		keyWord = keyWord.replace(/(^\s*)|(\s*$)/g, "");
+		if(keyWord!=""){
+			window.location.href = "${pageContext.request.contextPath}/portal/search.action?keyWord="+keyWord;
+		}
+	}
 	//页面一加载就像后台请求文章分类的数据
 	$(function(){
 		$.ajax({

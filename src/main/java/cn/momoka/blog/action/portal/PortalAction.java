@@ -107,7 +107,10 @@ public class PortalAction {
 		PageHelper.startPage(pageNum, pageSize);
 		
 		List<ArticleInfo> list=articleInfoService.list(param);
-
+		//有分页不一定为null
+		if(list.size()==0){
+			return "portal/404";
+		}
 		PageInfo<ArticleInfo> pageInfo = new PageInfo<ArticleInfo>(list);
 		map.put("pageInfo", pageInfo);
 		map.put("typeInfo", typeInfoService.selectById(typeId));
@@ -123,6 +126,9 @@ public class PortalAction {
 			@RequestParam(value="id") String id){
 		
 		ArticleInfo articleInfo=articleInfoService.selectById(id);
+		if(articleInfo==null){
+			return "portal/404";
+		}
 		map.put("articleInfo", articleInfo);
 
 		return "portal/article";

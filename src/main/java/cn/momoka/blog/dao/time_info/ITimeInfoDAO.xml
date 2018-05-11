@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+ "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="cn.momoka.blog.dao.time_info.ITimeInfoDAO">
+	
+	<!-- 建立sql查询结果字段与实体属性的映射关系 -->
+	<resultMap id="TimeInfoMap" type="cn.momoka.blog.view.TimeInfo">
+		<result column="id" property="id" />
+		<result column="content" property="content" />
+		<result column="end_time" property="end_time" />
+		<result column="status" property="status" />
+	</resultMap>
+	
+	<!-- 校验用户 -->
+	<select id="selectTime" resultMap="TimeInfoMap" parameterType="java.lang.String">
+		SELECT
+			*
+		FROM
+			time_info
+	</select>
+</mapper>

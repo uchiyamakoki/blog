@@ -32,7 +32,7 @@ public class momokaInterceptor implements HandlerInterceptor{
 		//1.0获取请求的地址
 		String url=request.getRequestURI();
 		//2.0对特殊地址直接放行
-		if(url.indexOf("login")>=0 || url.indexOf("portal")>=0){
+		if(url.indexOf("login")>=0 || url.indexOf("portal")>=0 ||url.indexOf("time_info")>=0){
 			return true;
 		}
 		//3.0判断session session存在的话，登陆后台
